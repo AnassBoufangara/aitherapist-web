@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AiTherapist Web Platform
 
-## Getting Started
+Web platform for the AiTherapist research prototype — a fine-tuned Qwen 2.5 7B model serving three roles (patient agent, therapist agent, diagnostic analyzer) for educational and research purposes.
 
-First, run the development server:
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router, TypeScript)
+- **Styling**: Tailwind CSS
+- **Database + Auth**: Supabase
+- **Inference**: Together AI (custom fine-tuned model)
+- **Voice**: Web Speech API (browser-native)
+- **Hosting**: Vercel + Supabase
+
+## Modes
+
+1. **Patient Agent** — Psychology students practice diagnosis by chatting with an AI patient
+2. **Therapist Agent** — Real therapists validate model safety by role-playing as patients
+3. **Simulation** — Server-side automated conversation between both agents
+
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` and fill in your credentials.
 
-## Learn More
+## Project Status
 
-To learn more about Next.js, take a look at the following resources:
+🚧 In active development. See branch `develop` for ongoing work.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Private research prototype. Not for production clinical use.
