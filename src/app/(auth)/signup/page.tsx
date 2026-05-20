@@ -61,6 +61,7 @@ export default function SignupPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            suppressHydrationWarning
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
@@ -76,6 +77,7 @@ export default function SignupPage() {
             minLength={6}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            suppressHydrationWarning
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
@@ -95,6 +97,7 @@ export default function SignupPage() {
         <button
           type="submit"
           disabled={loading}
+          suppressHydrationWarning   
           className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
         >
           {loading ? "Creating account..." : "Sign up"}

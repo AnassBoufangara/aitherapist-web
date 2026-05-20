@@ -30,14 +30,18 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="mt-8">
-        <Link
-          href="/history"
-          className="text-sm text-blue-600 hover:underline"
-        >
+      <div className="mt-8 flex flex-col gap-2">
+        <Link href="/history" className="text-sm text-blue-600 hover:underline">
           View past sessions →
         </Link>
+        <Link
+          href="/test-chat"
+          className="text-sm text-orange-600 hover:underline"
+        >
+          🧪 Test Chat (dev only) →
+        </Link>
       </div>
+
     </div>
   );
 }
