@@ -11,6 +11,10 @@ import {
   getAvailableVoices,
   onVoicesLoaded,
 } from "@/lib/voice/speech";
+import {
+  resolveStoredVoice,
+  pickDefaultVoice,
+} from "@/lib/voice/preferences";
 
 type ConversationState =
   | "idle"           // Not in voice mode
@@ -42,7 +46,6 @@ export default function Chat({
   const [voiceState, setVoiceState] = useState<ConversationState>("idle");
   const [interimTranscript, setInterimTranscript] = useState("");
 
-  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const liveConversationRef = useRef<ReturnType<typeof createLiveConversation> | null>(null);
@@ -71,27 +74,20 @@ export default function Chat({
     };
   }, []);
 
-  // Load available TTS voices and pick the best default
+  // Load voice preference from localStorage (or fall back to default)
   useEffect(() => {
     if (!ttsSupported) return;
 
-    const loadVoices = () => {
+    const loadVoice = () => {
       const voices = getAvailableVoices();
-      setAvailableVoices(voices);
+      if (voices.length === 0) return;
 
-      // Auto-pick best-sounding voice as default
-      // Preference order: Google/natural voices > local OS voices > anything English
-      const preferred =
-        voices.find((v) => v.name.toLowerCase().includes("google")) ||
-        voices.find((v) => v.name.toLowerCase().includes("natural")) ||
-        voices.find((v) => v.name.toLowerCase().includes("samantha")) || // macOS
-        voices.find((v) => v.name.toLowerCase().includes("aria")) || // Windows
-        voices[0];
-
-      if (preferred) setSelectedVoice(preferred);
+      // Try stored preference first, then sensible default
+      const voice = resolveStoredVoice(voices) || pickDefaultVoice(voices);
+      if (voice) setSelectedVoice(voice);
     };
 
-    const unsubscribe = onVoicesLoaded(loadVoices);
+    const unsubscribe = onVoicesLoaded(loadVoice);
     return unsubscribe;
   }, [ttsSupported]);
 
@@ -277,26 +273,6 @@ export default function Chat({
         <VoiceStatusBar state={voiceState} onStop={stopVoiceConversation} />
       )}
 
-      {inVoiceMode && availableVoices.length > 1 && (
-        <div className="flex items-center gap-2 border-b bg-gray-50 px-4 py-2 text-xs">
-          <label className="text-gray-700">Voice:</label>
-          <select
-            value={selectedVoice?.name || ""}
-            onChange={(e) => {
-              const voice = availableVoices.find((v) => v.name === e.target.value);
-              setSelectedVoice(voice || null);
-            }}
-            suppressHydrationWarning
-            className="rounded border border-gray-300 bg-white px-2 py-1 text-xs text-gray-900"
-          >
-            {availableVoices.map((voice) => (
-              <option key={voice.name} value={voice.name}>
-                {voice.name} ({voice.lang})
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
 
       {/* Messages area */}
       <div className="flex-1 space-y-4 overflow-y-auto p-6">

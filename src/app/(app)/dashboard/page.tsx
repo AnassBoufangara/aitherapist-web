@@ -12,14 +12,12 @@ export default function DashboardPage() {
           description="Practice diagnosis. Chat with an AI patient and identify their condition."
           href="/patient-agent"
           color="blue"
-          status="Coming soon"
         />
         <ModeCard
           title="Therapist Agent"
           description="Validate the model. Role-play as a patient and test the AI therapist's responses."
           href="/therapist-agent"
           color="green"
-          status="Coming soon"
         />
         <ModeCard
           title="Simulation"
@@ -65,9 +63,13 @@ function ModeCard({
     purple: "border-purple-200 hover:border-purple-400",
   };
 
-  return (
+  const isComingSoon = !!status;
+
+  const content = (
     <div
-      className={`rounded-lg border-2 bg-white p-6 transition-colors ${colors[color]}`}
+      className={`rounded-lg border-2 bg-white p-6 transition-colors ${colors[color]} ${
+        isComingSoon ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+      }`}
     >
       <h2 className="mb-2 text-lg font-semibold text-gray-900">{title}</h2>
       <p className="mb-4 text-sm text-gray-600">{description}</p>
@@ -78,4 +80,11 @@ function ModeCard({
       )}
     </div>
   );
+
+  // If "coming soon", render as a div. Otherwise, render as a Link.
+  if (isComingSoon) {
+    return content;
+  }
+
+  return <Link href={href}>{content}</Link>;
 }
