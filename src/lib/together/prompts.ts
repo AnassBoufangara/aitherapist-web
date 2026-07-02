@@ -1,5 +1,5 @@
 
-/****************************************** CLAUDE VERSION  **************************************** /
+/******************************************  VERSION  1 **************************************** /
 // /**
 //  * AiTherapist system prompts and condition mappings.
 //  */
@@ -149,7 +149,7 @@
 //   const conditions = getAvailableConditions();
 //   return conditions[Math.floor(Math.random() * conditions.length)];
 // }
-/* ***************************************** CLAUDE VERSION  **************************************** */
+/* *****************************************  VERSION  1 **************************************** */
 
 
 
@@ -355,6 +355,28 @@ export const ANALYZER_PROMPTS = {
 
 
 // ============================================
+// ANALYZER CLASSIFICATION PROMPT
+// ============================================
+// Forces the analyzer to pick a primary condition from the full list
+// and explain its reasoning. Used post-session for both Mode 1 and Mode 2.
+
+export const ANALYZER_CLASSIFICATION_PROMPT = `You are a clinical analyst reviewing a mental health conversation transcript. Analyze the patient's statements and identify which condition best matches their presentation.
+
+Consider these possible conditions:
+{condition_list}
+
+Provide your analysis in EXACTLY this format, with each field on its own line:
+
+PRIMARY CONDITION: [single most likely condition from the list above]
+CONFIDENCE: [high, medium, or low]
+KEY SYMPTOMS OBSERVED: [comma-separated list of specific symptoms the patient actually expressed]
+CLINICAL REASONING: [2-3 sentences explaining why these symptoms point to the primary condition]
+DIFFERENTIAL CONSIDERATIONS: [1-2 other conditions worth considering, and briefly why]
+
+Base your analysis ONLY on what the patient actually expressed in the conversation. Do not invent symptoms. If the conversation is too short to assess, say so in your reasoning and mark confidence as low.`;
+
+
+// ============================================
 // HELPER FUNCTIONS
 // ============================================
 /**
@@ -393,6 +415,20 @@ export function getRandomCondition(): string {
   return conditions[Math.floor(Math.random() * conditions.length)];
 }
 
+/**
+ * Build the analyzer classification prompt with the full condition list injected.
+ * Lists each condition's phrase + key so the model picks from the known set.
+ */
+export function getAnalyzerClassificationPrompt(): string {
+  const conditions = getAvailableConditions();
+  const conditionList = conditions
+    .map((key) => `- ${CONDITION_CONFIG_MAP[key].phrase} (${key})`)
+    .join("\n");
+  return ANALYZER_CLASSIFICATION_PROMPT.replace(
+    "{condition_list}",
+    conditionList,
+  );
+}
 
 
 

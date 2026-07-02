@@ -3,6 +3,24 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import type { DbMessage } from "@/types";
+import AnalysisPanel from "@/components/AnalysisPanel";
+
+function getExistingAnalysis(raw: unknown) {
+  if (
+    raw &&
+    typeof raw === "object" &&
+    "primaryCondition" in raw
+  ) {
+    return raw as {
+      primaryCondition: string;
+      confidence: "high" | "medium" | "low" | "unknown";
+      keySymptoms: string;
+      clinicalReasoning: string;
+      differentialConsiderations: string;
+    };
+  }
+  return null;
+}
 
 interface ConditionOption {
   key: string;
@@ -239,11 +257,11 @@ export default function PatientAgentResultsPage({
             )}
           </div>
 
-          {/* TODO: Day 7 — analyzer output goes here */}
-          <div className="rounded-lg border bg-gray-50 p-4 text-xs text-gray-500">
-            💡 Detailed clinical analysis of your therapeutic technique will be
-            added soon.
-          </div>
+          {/* Analyzer output goes here */}
+          <AnalysisPanel
+              sessionId={sessionId}
+              existingAnalysis={getExistingAnalysis(session.analysis_result)}
+            />
         </div>
       )}
 

@@ -26,4 +26,4 @@ export function getTogetherClient(): Together {
  */
 export const MODEL_NAME =
   process.env.TOGETHER_MODEL_NAME ||
-  "anasboufangara_c9c3/Qwen2.5-7B-Instruct-aitherapist-v1-09454e61";
+  "anasboufangara_c9c3/Qwen2.5-7B-Instruct-aitherapist-v1-09464e61";
