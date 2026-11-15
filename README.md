@@ -4,7 +4,6 @@
 
 AI Therapist is an educational platform for psychology students and clinicians-in-training. One fine-tuned model is driven into three distinct clinical roles, so learners can practice real diagnostic and therapeutic skills against a consistent, always-available counterpart — no scheduling, no risk to a real person, no limit on repetitions.
 
-![Dashboard — choose a mode to start a session](docs/images/dashboard.png)
 <img width="1911" height="1001" alt="dashboard" src="https://github.com/user-attachments/assets/67eb9476-68f7-4cc6-92c2-9791e66366d8" />
 
 
@@ -44,20 +43,17 @@ Every session ends in a structured **Clinical Analysis**, generated automaticall
 - **Differential considerations** — what else it could be, and why it isn't
 - **Confidence indicator** — flags low-confidence reads instead of guessing blindly
 
-![Clinical analysis card with reasoning and differentials](docs/images/clinical-analysis.png)
 <img width="909" height="598" alt="clinical-analysis" src="https://github.com/user-attachments/assets/93239c6f-8508-4afe-bef8-46066723e3b1" />
 
 
 
 In **Patient mode**, the learner submits a diagnosis and gets graded directly — correct, or wrong with a reasoned explanation drawn from the conversation itself. That turn, the explanation of *why* an answer was wrong, is what makes this a study tool rather than a chat log.
 
-![Session results — diagnosis graded with feedback](docs/images/session-results.png)
 <img width="1072" height="769" alt="session-results" src="https://github.com/user-attachments/assets/fe3739b0-bc80-4bfc-a520-6b08732cc121" />
 
 
 Simulation mode produces a full, readable session transcript that can be reviewed and analyzed afterward.
 
-![Full simulation transcript — patient and therapist turns](docs/images/transcript.png)
 <img width="767" height="746" alt="transcript" src="https://github.com/user-attachments/assets/e897e542-6d63-4899-8dee-7008e57f5529" />
 
 
